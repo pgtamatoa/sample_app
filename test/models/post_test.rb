@@ -29,5 +29,10 @@ class PostTest < ActiveSupport::TestCase
   	@post.title = "a"*51
   	assert_not @post.valid?
   end
+
+  test "content should have a maximum size" do
+    @post.title = "a"*1001
+    assert_not @post.valid?
+  end
   
 end

@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   
-  before_action :require_login
-  skip_before_action :require_login, only: [:index]
+  before_action :redirect_guest_user, unless: :logged_in? 
+  skip_before_action :redirect_guest_user, only: [:index]
 
   def index
     @posts = Post.all
@@ -29,11 +29,8 @@ class PostsController < ApplicationController
  
   private
  
-  def require_login
-    unless logged_in?
-      flash[:error] = "You must be logged in to access this section"
-      redirect_to login_path
-    end
+  def redirect_guest_user
+      redirect_to login_path, flash: { error: "You must be logged in to access this section" }
   end
 
 

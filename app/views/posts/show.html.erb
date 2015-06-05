@@ -1,0 +1,44 @@
+<% provide(:title, "show") %>
+
+<h1><%= @post.title %></h1>
+
+<div class="clearfix">
+  <p><%= @post.content %></p>
+
+  <hr/>
+  <div class="comments">
+    
+    <div class="list-comments">
+      <% if @post.comments.empty? %>
+        <p>This article isn't commented.</p>
+      <% else %>
+        <% @post.comments.each do |c| %>
+          <div class="post">
+            <b><%= c.user.name %></b>
+            <p><%= c.text %></p>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    
+    <div class="form-comments">
+      <% if logged_in? %>
+        <div class="row">
+          <div class="col-md-5 col-md-offset-0"> 
+            <%= form_for [@post, @post.comments.build] do |f| %>
+        
+              <div class="form-group">
+                <%= f.text_field :text, class: 'form-control' %>
+                <%= f.hidden_field :post_id, class: 'form-control' %>
+              </div>
+
+              <%= f.submit "Commenter", class: "btn btn-primary" %>
+            <% end %>
+          </div>  
+        </div>  
+      <% end %>
+    </div>
+
+  </div>
+
+</div>

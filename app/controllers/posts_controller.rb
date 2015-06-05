@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   
   before_action :redirect_guest_user, unless: :logged_in? 
-  skip_before_action :redirect_guest_user, only: [:index]
+  skip_before_action :redirect_guest_user, only: [:index, :show]
 
   def index
     @posts = Post.all
@@ -9,6 +9,10 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
+  end
+
+  def show
+    @post = Post.find(params[:id])
   end
 
   def create

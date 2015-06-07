@@ -10,7 +10,7 @@
     
     <div class="list-comments">
       <% if @post.comments.empty? %>
-        <p>This article isn't commented.</p>
+        <p>No comments.</p>
       <% else %>
         <% @post.comments.each do |c| %>
           <div class="post">
@@ -22,11 +22,17 @@
     </div>
     
     <div class="form-comments">
+      
+      <% unless @comment.nil? %>
+        <%= render partial: 'shared/error_messages', locals: { model: @comment } %>
+      <% end %>
+
       <% if logged_in? %>
         <div class="row">
           <div class="col-md-5 col-md-offset-0"> 
             <%= form_for [@post, @post.comments.build] do |f| %>
-        
+              
+
               <div class="form-group">
                 <%= f.text_field :text, class: 'form-control' %>
                 <%= f.hidden_field :post_id, class: 'form-control' %>

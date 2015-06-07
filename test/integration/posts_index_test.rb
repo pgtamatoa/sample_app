@@ -32,6 +32,9 @@ class PostsIndexTest < ActionDispatch::IntegrationTest
   end
 
   test "should get the right number of comments" do
+    
+    get posts_path
+    #assert_difference ->{ Post.count }, 
 
   end
 

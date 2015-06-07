@@ -1,6 +1,10 @@
 comment1:
-  text: MyString
+  text: MyString1
+  user_id: michael
+  post_id: post1
 
 comment2:
-  text: MyString
+  text: MyString2
+  user_id: michael
+  post_id: post2
 

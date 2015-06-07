@@ -7,11 +7,11 @@
     <p>There aint no post.</p>
   <% else %>
     <div class="posts">
-      <% @posts.each do |p| %>
+      <% @posts.each do |post| %>
         <div class="post"> 
-          <h3><%= link_to "#{p.title}", post_path(p.id) %></h3>
-          <p><%= p.content %></p>
-          <span class="bg-info"><%= pluralize(p.comments.count, "commentaire")%></span>
+          <h3><%= link_to post.title, post_path(post.id) %></h3>
+          <p><%= post.content %></p>
+          <span class="bg-info"><%= pluralize(post.comments.count, "commentaire")%></span>
         </div>
       <% end %>
     </div>

@@ -2,40 +2,39 @@ require 'test_helper'
 
 class CommentsCreationTest < ActionDispatch::IntegrationTest
   
-  attr_accessor :user#, :post
+  attr_accessor :user, :article
 
   def setup
     @user = users(:michael)
-    @post = posts(:post1)
+    @article = posts(:post1)
   end
 
-  test "should display the comments under the article commented with valid information login" do
+  test "when we comment an article, should display the new comment" do
     log_in_as user
-    get post_path(@post.id)
-    assert_select 'h1', "#{@post.title}"
-    assert_select 'p', "This article isn't commented."
-    #debugger
-    assert_difference 'Post.find(@post.id).comments.count', 1 do
-     post_via_redirect post_comments_path(post_id: @post.id), comment: { 
+    get post_path(article.id)
+    assert_select 'h1', article.title
+    assert_select 'p', "No comments."
+    assert_difference ->{ Post.find(article.id).comments.count }, 1 do
+     post_via_redirect post_comments_path(post_id: article.id), comment: { 
        text: 'Lorem ipsum',
-       post_id: "#{@post.id}"
+       post_id: article.id
      }
     end
     assert_select 'p', "Lorem ipsum"
     get posts_path
-    assert_select 'h3', "#{@post.title}"
-    assert_select 'pluralize(Post.find(@post.id).comments.count, "commentaire")', 1
+    assert_select 'h3', article.title
+    assert_select 'pluralize(Post.find(article.id).comments.count, "commentaire")', 1
   end
 
   test "should display the form under the article commented with valid information login" do    
     log_in_as user
-    get post_path(@post.id)
-    assert_select 'form', 1
+    get post_path(article.id)
+    assert_select 'form#new_comment', 1
   end
 
   test "shouldn't display the comment form with invalid information login" do
-    get post_path(@post.id)
-    assert_select 'form', 0
+    get post_path(article.id)
+    assert_select 'form#new_comment', 0
   end
 
 end

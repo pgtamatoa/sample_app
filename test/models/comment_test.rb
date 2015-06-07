@@ -3,12 +3,7 @@ require 'test_helper'
 class CommentTest < ActiveSupport::TestCase
   
   def setup
-    @user = users(:michael)
-    @post = posts(:post1)
-
     @comment = comments(:comment1)
-    @comment.user_id = @user.id
-    @comment.post_id = @post.id
 
   end
 

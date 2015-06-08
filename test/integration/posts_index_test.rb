@@ -17,11 +17,6 @@ class PostsIndexTest < ActionDispatch::IntegrationTest
       children: { count: 2, only: { tag: 'div', attributes: { class: "post" }} }
   end
 
-  test "should get the article page" do
-    get post_path(post1.id)
-    assert_select 'h1', "#{post1.title}"
-  end
-
   test "post when there aren't" do
     Post.delete_all
 
@@ -32,10 +27,8 @@ class PostsIndexTest < ActionDispatch::IntegrationTest
   end
 
   test "should get the right number of comments" do
-    
     get posts_path
-    #assert_difference ->{ Post.count }, 
-
+    assert_select 'h3', Post.count
   end
 
 end

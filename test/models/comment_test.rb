@@ -4,7 +4,6 @@ class CommentTest < ActiveSupport::TestCase
   
   def setup
     @comment = comments(:comment1)
-
   end
 
   test "should be valid" do

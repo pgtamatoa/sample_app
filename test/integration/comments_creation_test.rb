@@ -6,20 +6,22 @@ class CommentsCreationTest < ActionDispatch::IntegrationTest
 
   def setup
     @user = users(:michael)
-    @article = posts(:post1)
+    @article = posts(:post2)
   end
 
   test "when we comment an article, should display the new comment" do
     log_in_as user
     get post_path(article.id)
-    assert_select 'h1', article.title
-    assert_select 'p', "No comments."
+
+    assert_select '.list-comments p', "No comments."
+
     assert_difference ->{ Post.find(article.id).comments.count }, 1 do
      post_via_redirect post_comments_path(post_id: article.id), comment: { 
        text: 'Lorem ipsum',
        post_id: article.id
      }
     end
+
     assert_select 'p', "Lorem ipsum"
     get posts_path
     assert_select 'h3', article.title
@@ -29,11 +31,13 @@ class CommentsCreationTest < ActionDispatch::IntegrationTest
   test "should display the form under the article commented with valid information login" do    
     log_in_as user
     get post_path(article.id)
+
     assert_select 'form#new_comment', 1
   end
 
-  test "shouldn't display the comment form with invalid information login" do
+  test "shouldn't display the comment form with guest user" do
     get post_path(article.id)
+
     assert_select 'form#new_comment', 0
   end
 

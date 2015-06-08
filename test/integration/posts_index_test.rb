@@ -28,7 +28,7 @@ class PostsIndexTest < ActionDispatch::IntegrationTest
 
   test "should get the right number of comments" do
     get posts_path
-    assert_select 'h3', Post.count
+    assert_select '.post .bg-info', "#{post1.comments.count} commentaires"
   end
 
 end

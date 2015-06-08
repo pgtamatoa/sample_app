@@ -4,3 +4,7 @@ user = User.create!(name: 'John', email: 'john@hellojam.fr', password: 'azerty')
 4.times do |i|
   Post.create!(title: "Article #{i}", content: content, user_id: user.id)
 end
+
+3.times do
+  Comment.create!(text: "Cet article est génial !", user_id: user.id, post_id: Post.find_by(title: "Article 1").id)
+end

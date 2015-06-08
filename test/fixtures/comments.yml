@@ -1,0 +1,10 @@
+comment1:
+  text: MyString1
+  user: michael
+  post: post1
+
+comment2:
+  text: MyString2
+  user: michael
+  post: post1
+

@@ -24,6 +24,13 @@ class PostsController < ApplicationController
     end
   end
 
+  def destroy
+    @post = Post.find(params[:id])
+    #Comment.destroy_all(post.comments)
+    Post.destroy(:id)
+    redirect_to posts_path
+  end
+
   def post_params 
     params.require(:post).permit(:title, :content, :user_id).merge({
       user_id: current_user.id

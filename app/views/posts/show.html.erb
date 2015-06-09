@@ -12,10 +12,10 @@
       <% if @post.comments.empty? %>
         <p>No comments.</p>
       <% else %>
-        <% @post.comments.each do |c| %>
+        <% @post.comments.each do |comment| %>
           <div class="post">
-            <b><%= c.user.name %></b>
-            <p><%= c.text %></p>
+            <b><%= comment.user.name %></b>
+            <p><%= comment.text %></p>
           </div>
         <% end %>
       <% end %>

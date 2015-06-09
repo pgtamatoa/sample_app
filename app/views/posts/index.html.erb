@@ -5,6 +5,7 @@
 <div class="clearfix">
   <% if @posts.empty? %>
     <p>There aint no post.</p>
+
   <% else %>
     <div class="posts">
       <% @posts.each do |post| %>
@@ -14,6 +15,7 @@
           <span class="bg-info"><%= pluralize(post.comments.count, "commentaire")%></span>
         </div>
       <% end %>
+      <%= paginate @posts %>
     </div>
   <% end %>
 </div>

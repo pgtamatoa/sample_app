@@ -4,7 +4,8 @@ class PostsController < ApplicationController
   skip_before_action :redirect_guest_user, only: [:index, :show]
 
   def index
-    @posts = Post.all
+    @posts = Post.page(params[:page]).per(5)
+    
   end
 
   def new

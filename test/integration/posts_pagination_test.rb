@@ -13,7 +13,7 @@ class PaginationTest < ActionDispatch::IntegrationTest
     assert_select '.post', Post.page.count
 
     get posts_path(page: 2)
-    assert_select '.post', 1
+    assert_select '.post', Post.page(2).count
   end
 
 end

@@ -14,6 +14,7 @@
           <span class="bg-info"><%= pluralize(post.comments.count, "commentaire")%></span>
         </div>
       <% end %>
+      <%= paginate @posts %>
     </div>
   <% end %>
 </div>

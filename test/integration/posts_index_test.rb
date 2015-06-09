@@ -6,15 +6,13 @@ class PostsIndexTest < ActionDispatch::IntegrationTest
 
   def setup
     @post1 = posts(:post1)
-    posts(:post2)
   end
 
-  test "post when there are 2 articles" do
+  test "post when there are more than 5 articles" do
     get posts_path
     
     assert_template 'posts/index'
-    assert_tag tag: 'div', attributes: { class: "posts" }, 
-      children: { count: 2, only: { tag: 'div', attributes: { class: "post" }} }
+    assert_select '.post', Post.page.count
   end
 
   test "post when there aren't" do

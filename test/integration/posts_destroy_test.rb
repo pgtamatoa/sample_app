@@ -12,10 +12,10 @@ class PostsDestroyTest < ActionDispatch::IntegrationTest
 
   end
 
-  test "should delete a post's user and all his comments when logged" do
+  test "should delete a post's user when logged" do
     log_in_as user
     get post_path(post1)
-    assert_difference -> { post1.comments.count}, -3 do
+    assert_difference -> { Post.count}, -1 do
       delete post_path(id: post1.id)
     end
   end

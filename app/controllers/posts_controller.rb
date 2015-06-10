@@ -2,7 +2,6 @@ class PostsController < ApplicationController
   
   before_action :redirect_guest_user, unless: :logged_in? 
   skip_before_action :redirect_guest_user, only: [:index, :show]
-  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
     @posts = Post.page(params[:page])
@@ -27,8 +26,11 @@ class PostsController < ApplicationController
 
   def destroy
     @post = current_user.posts.find(params[:id])
-    Post.destroy(@post.id)
-    redirect_to posts_path
+    if @post.destroy
+      redirect_to posts_path(@post)
+    else
+      render 'show'
+    end
   end
 
   private

@@ -2,7 +2,6 @@ class CommentsController < ApplicationController
   
   before_action :redirect_guest_user, unless: :logged_in? 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-  skip_before_action :redirect_guest_user, only: [:index]
 
   def new
     @comment = Comment.new
@@ -22,8 +21,11 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment = current_user.comments.find(params[:id])
-    Comment.destroy(@comment)
-    redirect_to post_path(@comment.post)
+    if @comment.destroy
+      redirect_to post_path(@comment.post)
+    else
+      render 'posts/show'
+    end
   end
 
   private

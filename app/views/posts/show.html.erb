@@ -1,13 +1,19 @@
 <% provide(:title, "show") %>
 
-<h1><%= @post.title %></h1>
+<h1>
+  <%= @post.title %>
+  <% if current_user == @post.user %>
+    <small>
+      <%= link_to " Delete", post_path(id: @post.id), :method => :delete, data: {:confirm => "Are you sure?"} %>
+    </small>
+  <%end%>
+</h1>
 
 <div class="clearfix">
   <p><%= @post.content %></p>
-
   <hr/>
+
   <div class="comments">
-    
     <div class="list-comments">
       <% if @post.comments.empty? %>
         <p>No comments.</p>
@@ -15,29 +21,30 @@
         <% @post.comments.each do |comment| %>
           <div class="post">
             <b><%= comment.user.name %></b>
-            <p><%= comment.text %></p>
+            <p>
+              <i><%= comment.text %></i>
+              <% if current_user == comment.user %>
+                <%= link_to " Delete", post_comment_path(post_id: comment.post, id: comment.id), :method => :delete, data: {:confirm => "Are you sure?"} %>
+              <% end %>
+            </p>
           </div>
         <% end %>
       <% end %>
     </div>
     
     <div class="form-comments">
-      
       <% unless @comment.nil? %>
         <%= render partial: 'shared/error_messages', locals: { model: @comment } %>
       <% end %>
-
       <% if logged_in? %>
         <div class="row">
           <div class="col-md-5 col-md-offset-0"> 
             <%= form_for [@post, @post.comments.build] do |f| %>
-              
 
               <div class="form-group">
                 <%= f.text_field :text, class: 'form-control' %>
                 <%= f.hidden_field :post_id, class: 'form-control' %>
               </div>
-
               <%= f.submit "Commenter", class: "btn btn-primary" %>
             <% end %>
           </div>  

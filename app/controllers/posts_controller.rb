@@ -2,6 +2,7 @@ class PostsController < ApplicationController
   
   before_action :redirect_guest_user, unless: :logged_in? 
   skip_before_action :redirect_guest_user, only: [:index, :show]
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
     @posts = Post.page(params[:page])
@@ -25,24 +26,17 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find(params[:id])
-    #Comment.destroy_all(post.comments)
-    Post.destroy(:id)
+    @post = current_user.posts.find(params[:id])
+    Post.destroy(@post.id)
     redirect_to posts_path
   end
 
+  private
+ 
   def post_params 
     params.require(:post).permit(:title, :content, :user_id).merge({
       user_id: current_user.id
     })
   end
-
- 
-  private
- 
-  def redirect_guest_user
-      redirect_to login_path, flash: { error: "You must be logged in to access this section" }
-  end
-
 
 end

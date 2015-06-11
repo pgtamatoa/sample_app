@@ -22,7 +22,7 @@ class CommentsCreationTest < ActionDispatch::IntegrationTest
      }
     end
 
-    assert_select 'p', "Lorem ipsum"
+    assert_select '.list-comments p i', "Lorem ipsum"
     get posts_path
     assert_select 'h3', article.title
     assert_select 'pluralize(Post.find(article.id).comments.count, "commentaire")', 1

@@ -17,6 +17,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
+    
     if @post.save
       redirect_to posts_path
     else
@@ -24,18 +25,22 @@ class PostsController < ApplicationController
     end
   end
 
+  def destroy
+    @post = current_user.posts.find(params[:id])
+
+    if @post.destroy
+      redirect_to posts_path
+    else
+      redirect_to post_path(@post), flash: {danger: "Error."}
+    end
+  end
+
+  private
+ 
   def post_params 
     params.require(:post).permit(:title, :content, :user_id).merge({
       user_id: current_user.id
     })
   end
-
- 
-  private
- 
-  def redirect_guest_user
-      redirect_to login_path, flash: { error: "You must be logged in to access this section" }
-  end
-
 
 end

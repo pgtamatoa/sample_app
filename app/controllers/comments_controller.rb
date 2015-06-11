@@ -1,5 +1,7 @@
 class CommentsController < ApplicationController
   
+  before_action :redirect_guest_user, unless: :logged_in? 
+
   def new
     @comment = Comment.new
   end
@@ -13,8 +15,19 @@ class CommentsController < ApplicationController
     else
       render 'posts/show'
     end
-
   end
+
+  def destroy
+    @comment = current_user.comments.find(params[:id])
+
+    if @comment.destroy
+      redirect_to post_path(@comment.post)
+    else
+      redirect_to post_path(@comment.post), flash: {danger: "Error."}
+    end
+  end
+
+  private
 
   def comment_params 
     params.require(:comment).permit(:text,:user_id,:post_id).merge({

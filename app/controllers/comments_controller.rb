@@ -16,15 +16,15 @@ class CommentsController < ApplicationController
     else
       render 'posts/show'
     end
-
   end
 
   def destroy
     @comment = current_user.comments.find(params[:id])
+
     if @comment.destroy
       redirect_to post_path(@comment.post)
     else
-      render 'posts/show'
+      redirect_to post_path(@comment.post), flash: {danger: "Error."}
     end
   end
 

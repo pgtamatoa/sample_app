@@ -30,4 +30,13 @@ class CommentsDestroyTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "should be redirect to the right page if an error occur" do
+    log_in_as user
+    get post_path(post1)
+    Comment.stub_any_instance(:destroy, false) do
+      delete_via_redirect post_comment_path(post_id: post1, id: comment1.id)
+      assert_select '.alert', 'Error.'
+    end
+  end
+
 end

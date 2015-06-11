@@ -28,4 +28,12 @@ class PostsDestroyTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "should be redirect to the right page when a destroy error occur" do
+    log_in_as user
+    get post_path(post1)
+    Post.stub_any_instance(:destroy, false) do
+      delete_via_redirect post_path(post1)
+      assert_select '.alert', 'Error.'
+    end      
+  end
 end

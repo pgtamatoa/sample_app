@@ -17,6 +17,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
+    
     if @post.save
       redirect_to posts_path
     else
@@ -26,10 +27,11 @@ class PostsController < ApplicationController
 
   def destroy
     @post = current_user.posts.find(params[:id])
+
     if @post.destroy
-      redirect_to posts_path(@post)
+      redirect_to posts_path
     else
-      render 'show'
+      redirect_to post_path(@post), flash: {danger: "Error."}
     end
   end
 

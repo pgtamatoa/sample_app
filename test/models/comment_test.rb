@@ -29,7 +29,7 @@ class CommentTest < ActiveSupport::TestCase
   end
 
   test "should delete all the comments of a post's user when logged" do
-    assert_difference -> { post1.comments.count}, -3 do
+    assert_difference -> { post1.comments.count }, -3 do
       post1.destroy
     end
   end

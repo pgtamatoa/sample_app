@@ -9,7 +9,6 @@ gem 'jquery-rails', '4.0.3'
 gem 'turbolinks','2.3.0'
 gem 'jbuilder','2.2.3'
 gem 'kaminari'
-gem 'minitest-stub_any_instance'
 gem 'sdoc','0.4.0', group: :doc
 
 group :development, :test do
@@ -23,6 +22,7 @@ group :test do
   gem 'minitest-reporters', '1.0.5'
   gem 'mini_backtrace', '0.1.3'
   gem 'guard-minitest', '2.3.1'
+  gem 'minitest-stub_any_instance'
 end
 
 group :production do

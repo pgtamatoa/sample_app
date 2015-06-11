@@ -11,7 +11,6 @@ class CommentsDestroyTest < ActionDispatch::IntegrationTest
 
     @comment1 = comments(:comment1)
     @comment3 = comments(:comment3)
-
   end
 
   test "should delete a comment's user from the relative post page when logged" do

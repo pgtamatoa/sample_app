@@ -1,7 +1,6 @@
 class CommentsController < ApplicationController
   
   before_action :redirect_guest_user, unless: :logged_in? 
-  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def new
     @comment = Comment.new

@@ -6,7 +6,7 @@ class CommentsDestroyTest < ActionDispatch::IntegrationTest
 
   def setup
     @user = users(:michael)
-    
+
     @post1 = posts(:post1)
 
     @comment1 = comments(:comment1)
@@ -37,5 +37,4 @@ class CommentsDestroyTest < ActionDispatch::IntegrationTest
       assert_select '.alert', 'Error.'
     end
   end
-
 end

@@ -1,22 +1,23 @@
 class User < ActiveRecord::Base
-
   attr_accessor :remember_token
 
   has_many :posts
   has_many :comments
 
-  before_save { email.downcase! }
-  validates(:name, presence: true, length: {maximum: 50})
+  validates :name, presence: true, length: { maximum: 50 }
+
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
-  validates :email, presence: true, 
-    length: {maximum: 255},
-    format: { with: VALID_EMAIL_REGEX }, 
-    uniqueness: {case_sensitive: false}
+
+  validates :email, presence: true,
+    length: { maximum: 255 },
+    format: { with: VALID_EMAIL_REGEX },
+    uniqueness: { case_sensitive: false }
+  before_save { email.downcase! }
+
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }
 
   class << self
-
     def digest(string)
       cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
       BCrypt::Password.create(string, cost: cost)
@@ -32,7 +33,6 @@ class User < ActiveRecord::Base
     update_attribute(:remember_digest, User.digest(remember_token))
   end
 
-  # Returns true if the given token matches the digest.
   def authenticated?(remember_token)
     return false if remember_digest.nil?
     BCrypt::Password.new(remember_digest).is_password?(remember_token)
@@ -43,5 +43,4 @@ class User < ActiveRecord::Base
       :remember_digest, nil
     )
   end
-
 end

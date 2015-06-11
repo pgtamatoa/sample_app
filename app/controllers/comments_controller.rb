@@ -1,6 +1,5 @@
 class CommentsController < ApplicationController
-  
-  before_action :redirect_guest_user, unless: :logged_in? 
+  before_action :redirect_guest_user, unless: :logged_in?
 
   def new
     @comment = Comment.new
@@ -23,16 +22,15 @@ class CommentsController < ApplicationController
     if @comment.destroy
       redirect_to post_path(@comment.post)
     else
-      redirect_to post_path(@comment.post), flash: {danger: "Error."}
+      redirect_to post_path(@comment.post), flash: { danger: "Error." }
     end
   end
 
   private
 
-  def comment_params 
+  def comment_params
     params.require(:comment).permit(:text,:user_id,:post_id).merge({
       user_id: current_user.id
     })
   end
-
 end

@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'rails_helper'
 
 RSpec.feature 'authenticate' do
-
   before do 
     visit login_path
 

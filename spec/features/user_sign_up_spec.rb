@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'rails_helper'
 
 RSpec.feature 'Signs up' do
-
   before do
     visit signup_path
 

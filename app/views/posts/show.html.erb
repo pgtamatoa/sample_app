@@ -24,7 +24,7 @@
             <p>
               <i><%= comment.text %></i>
               <% if current_user == comment.user %>
-                <%= link_to " Delete", post_comment_path(post_id: comment.post, id: comment.id), method: :delete, data: {confirm: "Are you sure?"} %>
+                <%= link_to " Delete", post_comments_path(post_id: comment.post, id: comment.id), method: :delete, data: {confirm: "Are you sure?"} %>
               <% end %>
             </p>
           </div>

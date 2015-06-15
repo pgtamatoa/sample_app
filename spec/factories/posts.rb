@@ -1,9 +1,8 @@
 FactoryGirl.define do
-  sequence(:title, 7) { |n| "Article#{n}" }
 
   factory :post do
     user
-    title
+    title "Titre article"
     content "Lorem ipsum"
   end
 end

@@ -36,7 +36,7 @@ RSpec.describe User, type: :model do
     let(:user) { create(:user) }
 
     it "is is valid" do
-      expect(user.authenticated?('')).to eq false
+      expect(user.authenticated?('')).to be false
     end
   end
 end

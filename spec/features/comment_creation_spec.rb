@@ -1,32 +1,30 @@
 require 'spec_helper'
 require 'rails_helper'
+require 'support/helpers'
 
-RSpec.feature 'Comment#creation' do
-
-  describe "when the user is logged" do
+RSpec.feature "Comment creation" do
+  context "when the user is logged" do
     let(:user) { create(:user) }
     let(:post) { create(:post) }
 
     before do 
-      visit login_path
-      fill_in 'Email', with: user.email
-      fill_in 'Password', with: user.password
-      click_button 'Log in'
+      login_as(email: user.email, password: user.password) 
+      visit post_path(post)
     end
 
-    context "with valid informations" do
+    describe "with valid informations" do
       before do
-        post_comment('Lorem ipsum.')
+        fill_and_submit_with(text: 'Lorem ipsum.')
       end
-      
+
       it "create a comment" do
         expect(page).to have_text("Lorem ipsum.")
       end
     end
 
-    context "with invalid informations" do
+    describe "with invalid informations" do
       before do
-        post_comment('')
+        fill_and_submit_with(text: '')
       end
 
       it "does not create a comment" do
@@ -35,7 +33,7 @@ RSpec.feature 'Comment#creation' do
     end
   end
 
-  describe "when the user is a guest" do
+  context "when the user is a guest" do
     before do 
       visit posts_path
     end
@@ -45,9 +43,8 @@ RSpec.feature 'Comment#creation' do
     end
   end
 
-  def post_comment(text)
-    visit post_path(post)
-    fill_in "comment[text]", with: text
+  def fill_and_submit_with(param)
+    fill_in "comment[text]", with: param[:text]
     click_button 'Commenter'
   end
 end

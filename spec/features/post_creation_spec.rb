@@ -1,20 +1,19 @@
 require 'spec_helper'
 require 'rails_helper'
+require 'support/helpers'
 
-RSpec.feature 'Post#creation' do
-  describe "when the user is logged" do
+RSpec.feature 'Post creation' do
+  context "when the user is logged" do
     let(:user) { create(:user) }
 
-    before do 
-      visit login_path
-      fill_in 'Email', with: user.email
-      fill_in 'Password', with: user.password
-      click_button 'Log in'
+    before do
+      login_as(email: user.email, password: user.password) 
+      visit new_post_path
     end
 
-    context "with valid informations" do
+    describe "with valid informations" do
       before do
-        post_article("Titre Article", "Lorem ipsum.")
+        fill_and_submit_with(title: "Titre Article", content: "Lorem ipsum.")
       end
 
       it "create the post" do
@@ -22,9 +21,9 @@ RSpec.feature 'Post#creation' do
       end
     end
 
-    context "with invalid informations" do
+    describe "with invalid informations" do
       before do
-        post_article("", "Lorem ipsum.")
+        fill_and_submit_with(title: "", content: "Lorem ipsum.")
       end
 
       it "does not create the post" do
@@ -33,7 +32,7 @@ RSpec.feature 'Post#creation' do
     end
   end
 
-  describe "when the user is a guest" do
+  context "when the user is a guest" do
     before do 
       visit posts_path
     end
@@ -42,10 +41,9 @@ RSpec.feature 'Post#creation' do
     end
   end
 
-  def post_article(title, content)
-    visit new_post_path
-    fill_in 'Title', with: title
-    fill_in 'Content', with: content
+  def fill_and_submit_with(param)
+    fill_in 'Title', with: param[:title]
+    fill_in 'Content', with: param[:content]
     click_button 'Create the post'
   end
 end

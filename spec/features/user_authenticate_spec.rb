@@ -1,14 +1,10 @@
 require 'spec_helper'
 require 'rails_helper'
+require 'support/helpers'
 
 RSpec.feature 'authenticate' do
   before do 
-    visit login_path
-
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-
-    click_button 'Log in' 
+    login_as(email: user.email, password: user.password) 
   end
 
   context "with valid information" do

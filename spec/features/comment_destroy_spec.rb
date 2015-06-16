@@ -14,16 +14,16 @@ RSpec.feature 'Comment destroy' do
     end
 
     it "display the Delete link" do
-      expect(page).to have_css("#comment_#{comment1.id} a")
+      expect(page).to have_css("#destroy_comment_#{comment1.id} a")
     end
 
     it "display there aint no post after having click on delete" do
-      find("#comment_#{comment1.id} a").click
+      find("#destroy_comment_#{comment1.id} a").click
       expect(page).to have_text('No comments.')
     end
   end
 
-  context "when the comment is not the user property" do
+  context "when the current user isn't the comment's owner" do
     let(:user1) { create(:user) }
     let(:user2) { create(:user) }
     let(:post1) { create(:post) }
@@ -35,7 +35,7 @@ RSpec.feature 'Comment destroy' do
     end
 
     it "does not display the Delete link" do
-      expect(page).to_not have_css("#comment_#{comment1.id} a")
+      expect(page).to_not have_css("#destroy_comment_#{comment1.id} a")
     end
   end
 
@@ -48,7 +48,7 @@ RSpec.feature 'Comment destroy' do
     end
     
     it "does not display the Delete link" do
-      expect(page).to_not have_css("#comment_#{comment1.id} a")
+      expect(page).to_not have_css("#destroy_comment_#{comment1.id} a")
     end
   end
 end

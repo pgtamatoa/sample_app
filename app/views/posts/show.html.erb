@@ -3,7 +3,7 @@
 <h1>
   <%= @post.title %>
   <% if current_user == @post.user %>
-    <small id="<%=dom_id(@post)%>">
+    <small id="<%=dom_id(@post, :destroy)%>">
       <%= link_to " Delete", post_path(@post), method: :delete, data: {confirm: "Are you sure?"} %>
     </small>
   <%end%>
@@ -23,7 +23,7 @@
             <b><%= comment.user.name %></b>
             <p>
               <i><%= comment.text %></i>
-              <small id="<%=dom_id(comment)%>">
+              <small id="<%=dom_id(comment, :destroy)%>">
                 <% if current_user == comment.user %>
                   <%= link_to " Delete", post_comment_path(post_id: comment.post, id: comment.id), method: :delete, data: {confirm: "Are you sure?"} %>
                 <% end %>

@@ -13,11 +13,11 @@ RSpec.feature 'Post destroy' do
     end
 
     it "display the Delete link" do
-      expect(page).to have_css("#post_#{post1.id} a")
+      expect(page).to have_css("#destroy_post_#{post1.id} a")
     end
 
-    it "display there aint no post after having click on delete" do
-      find("#post_#{post1.id} a").click
+    it "display there aint no post after deleting when there is one post" do
+      find("#destroy_post_#{post1.id} a").click
       expect(page).to have_text('There aint no post.')
     end
   end
@@ -33,7 +33,7 @@ RSpec.feature 'Post destroy' do
     end
 
     it "does not display the Delete link" do
-      expect(page).to_not have_css("#post_#{post1.id} a")
+      expect(page).to_not have_css("#destroy_post_#{post1.id} a")
     end
   end
 
@@ -44,7 +44,7 @@ RSpec.feature 'Post destroy' do
     end
     
     it "does not display the Delete link" do
-      expect(page).to_not have_css("#post_#{post1.id} a")
+      expect(page).to_not have_css("#destroy_post_#{post1.id} a")
     end
   end
 end

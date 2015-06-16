@@ -11,17 +11,19 @@ RSpec.feature 'Post creation' do
       visit new_post_path
     end
 
-    describe "with valid informations" do
+    describe "with valid information" do
+      let(:title) { "Titre Article" }
+
       before do
-        fill_and_submit_with(title: "Titre Article", content: "Lorem ipsum.")
+        fill_and_submit_with(title: title, content: "Lorem ipsum.")
       end
 
       it "display the article created" do
-        expect(page).to have_content("Titre Article")
+        expect(page).to have_content(title)
       end
     end
 
-    describe "with invalid informations" do
+    describe "with invalid information" do
       before do
         fill_and_submit_with(title: "", content: "Lorem ipsum.")
       end
@@ -36,7 +38,7 @@ RSpec.feature 'Post creation' do
     before do 
       visit posts_path
     end
-    
+
     it "doesn't have access to the post creation page" do
       expect(page).to_not have_content('New Post')
     end

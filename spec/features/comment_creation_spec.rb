@@ -12,22 +12,24 @@ RSpec.feature "Comment creation" do
       visit post_path(post)
     end
 
-    describe "with valid informations" do
+    describe "with valid information" do
+      let(:text) { "Lorem ipsum."}
+
       before do
-        fill_and_submit_with(text: 'Lorem ipsum.')
+        fill_and_submit_with(text: text)
       end
 
       it "create a comment" do
-        expect(page).to have_text("Lorem ipsum.")
+        expect(page).to have_text(text)
       end
     end
 
-    describe "with invalid informations" do
+    describe "with invalid information" do
       before do
         fill_and_submit_with(text: '')
       end
 
-      it "does not create a comment" do
+      it "display an error message" do
         expect(page).to have_css('.alert')
       end
     end

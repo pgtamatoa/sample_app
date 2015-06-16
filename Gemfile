@@ -23,6 +23,11 @@ group :test do
   gem 'mini_backtrace', '0.1.3'
   gem 'guard-minitest', '2.3.1'
   gem 'minitest-stub_any_instance'
+  gem 'rspec-rails', '~> 3.0'
+  gem 'shoulda-matchers', require: false
+  gem 'shoulda'
+  gem 'factory_girl_rails', '~>4.0'
+  gem 'capybara'
 end
 
 group :production do

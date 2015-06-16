@@ -6,19 +6,19 @@ RSpec.feature 'Comment destroy' do
   context "when the comment is the user property" do
     let(:user1) { create(:user) }
     let(:post1) { create(:post) }
+    let!(:comment1) { create(:comment, user: user1, post: post1) }
 
     before do
-      create(:comment, user: user1, post: post1) 
       login_as(email: user1.email, password: user1.password) 
       visit_index_and_click_on_an_article
     end
 
     it "display the Delete link" do
-      expect(page).to have_css("small.comment_destroy a")
+      expect(page).to have_css("#comment_#{comment1.id} a")
     end
 
     it "display there aint no post after having click on delete" do
-      find("small.comment_destroy a").click
+      find("#comment_#{comment1.id} a").click
       expect(page).to have_text('No comments.')
     end
   end
@@ -27,28 +27,28 @@ RSpec.feature 'Comment destroy' do
     let(:user1) { create(:user) }
     let(:user2) { create(:user) }
     let(:post1) { create(:post) }
+    let!(:comment1) { create(:comment, user: user2, post: post1) }
 
     before do 
-      create(:comment, user: user2, post: post1) 
       login_as(email: user1.email, password: user1.password) 
       visit_index_and_click_on_an_article
     end
 
     it "does not display the Delete link" do
-      expect(page).to_not have_css("small.comment_destroy a")
+      expect(page).to_not have_css("#comment_#{comment1.id} a")
     end
   end
 
   context "when the user is a guest" do
     let(:post1) { create(:post) }
+    let!(:comment1) { create(:comment, post: post1) }
 
     before do
-      create(:comment, post: post1) 
       visit_index_and_click_on_an_article
     end
     
     it "does not display the Delete link" do
-      expect(page).to_not have_css("small.comment_destroy a")
+      expect(page).to_not have_css("#comment_#{comment1.id} a")
     end
   end
 end

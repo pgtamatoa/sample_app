@@ -16,7 +16,7 @@ RSpec.feature 'Post creation' do
         fill_and_submit_with(title: "Titre Article", content: "Lorem ipsum.")
       end
 
-      it "create the post" do
+      it "display the article created" do
         expect(page).to have_content("Titre Article")
       end
     end
@@ -26,7 +26,7 @@ RSpec.feature 'Post creation' do
         fill_and_submit_with(title: "", content: "Lorem ipsum.")
       end
 
-      it "does not create the post" do
+      it "display an error message" do
         expect(page).to have_css('.alert')
       end
     end
@@ -36,6 +36,7 @@ RSpec.feature 'Post creation' do
     before do 
       visit posts_path
     end
+    
     it "doesn't have access to the post creation page" do
       expect(page).to_not have_content('New Post')
     end

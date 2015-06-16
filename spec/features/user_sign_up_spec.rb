@@ -15,6 +15,7 @@ RSpec.feature 'Signs up' do
 
   context 'with valid information' do
     let (:user) { build (:user) }
+    
     it 'display the user page' do
       expect(page).to have_content('Account')
     end
